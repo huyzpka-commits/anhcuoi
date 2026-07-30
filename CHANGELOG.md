@@ -7,7 +7,7 @@ All notable changes to this project are documented here.
 ## [2026-07-30] — Initial Release v1.0.0
 
 ### Added
-- Created complete **Dũng - Anh Wedding Gallery** single-page website
+- Created complete **Dũng - Việt Anh Wedding Gallery** single-page website
 - Hero section with parallax background + animated sparkle effects
 - **3 initial albums**:
   - Sunny Garden (emerald)

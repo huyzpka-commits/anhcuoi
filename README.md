@@ -1,4 +1,4 @@
-# Dũng - Anh Wedding Gallery
+# Dũng - Việt Anh Wedding Gallery
 
 **Luxury Wedding Photography Showcase**  
 A beautiful, interactive gallery website for the wedding of Dũng & Anh.

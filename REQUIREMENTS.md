@@ -1,7 +1,7 @@
 # REQUIREMENTS.md
 
 ## Project Overview
-**Dũng - Anh Wedding Gallery** — A luxurious, interactive wedding photography showcase website for the wedding of Dũng & Anh.
+**Dũng - Việt Anh Wedding Gallery** — A luxurious, interactive wedding photography showcase website for the wedding of Dũng & Việt Anh.
 
 The application allows users to view beautiful photo albums with stunning visual effects, and provides a full-featured admin interface to manage albums and upload custom images.
 
