@@ -47,6 +47,7 @@ No installation or backend required.
 ```
 /
 ├── index.html          # Main website
+├── albums/             # Root folder for album subfolders
 ├── REQUIREMENTS.md     # Project requirements
 ├── CHANGELOG.md        # Version history & changes
 └── README.md           # This file

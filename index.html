@@ -443,6 +443,7 @@
                         id: 'sunny',
                         name: 'Sunny Garden',
                         color: 'emerald',
+                        folder: 'albums/sunny_garden',
                         images: [
                             { id: Date.now() + 1, url: 'https://picsum.photos/id/1015/800/600', caption: 'Sunny Garden #1' },
                             { id: Date.now() + 2, url: 'https://picsum.photos/id/1005/800/600', caption: 'Sunny Garden #2' },
@@ -454,6 +455,7 @@
                         id: 'saigon',
                         name: 'Phim Trường Sài Gòn',
                         color: 'amber',
+                        folder: 'albums/phim_truong_sai_gon',
                         images: [
                             { id: Date.now() + 5, url: 'https://picsum.photos/id/201/800/600', caption: 'Phim Trường #1' },
                             { id: Date.now() + 6, url: 'https://picsum.photos/id/251/800/600', caption: 'Phim Trường #2' },
@@ -465,6 +467,7 @@
                         id: 'highlights',
                         name: 'Highlights',
                         color: 'violet',
+                        folder: 'albums/highlights',
                         images: [
                             { id: Date.now() + 9, url: 'https://picsum.photos/id/1009/800/600', caption: 'Highlight #1' },
                             { id: Date.now() + 10, url: 'https://picsum.photos/id/133/800/600', caption: 'Highlight #2' },
@@ -475,6 +478,7 @@
                         id: 'night',
                         name: 'Garden Night',
                         color: 'rose',
+                        folder: 'albums/garden_night',
                         images: [
                             { id: Date.now() + 12, url: 'https://picsum.photos/id/106/800/600', caption: 'Night #1' },
                             { id: Date.now() + 13, url: 'https://picsum.photos/id/1018/800/600', caption: 'Night #2' }
@@ -484,6 +488,7 @@
                         id: 'indoor',
                         name: 'Indoor Studio',
                         color: 'sky',
+                        folder: 'albums/indoor_studio',
                         images: [
                             { id: Date.now() + 14, url: 'https://picsum.photos/id/160/800/600', caption: 'Studio #1' },
                             { id: Date.now() + 15, url: 'https://picsum.photos/id/201/800/600', caption: 'Studio #2' },
@@ -655,6 +660,17 @@
         }
         
         // Create New Album
+        function slugify(text) {
+            return text
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/đ/g, 'd')
+                .replace(/[^a-z0-9\s]/g, '')
+                .trim()
+                .replace(/\s+/g, '_');
+        }
+
         function createNewAlbum() {
             const nameInput = document.getElementById('new-album-name');
             const name = nameInput.value.trim();
@@ -667,10 +683,14 @@
             const colors = ['emerald', 'amber', 'violet', 'rose', 'sky', 'indigo', 'orange'];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
             
+            const albumId = 'album_' + Date.now();
+            const folderName = slugify(name) || 'album_' + Date.now();
+            
             const newAlbum = {
-                id: 'album_' + Date.now(),
+                id: albumId,
                 name: name,
                 color: randomColor,
+                folder: 'albums/' + folderName,
                 images: []
             };
             
@@ -686,10 +706,10 @@
             // Show success message
             const toast = document.createElement('div');
             toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-900 text-emerald-300 px-5 py-3 rounded-2xl text-sm`;
-            toast.innerHTML = `Đã tạo album <strong>${name}</strong>`;
+            toast.innerHTML = `Đã tạo album <strong>${name}</strong> — thư mục: <code>albums/${folderName}/</code>`;
             document.body.appendChild(toast);
             
-            setTimeout(() => toast.remove(), 2200);
+            setTimeout(() => toast.remove(), 3000);
         }
         
         // Render Admin Album List
@@ -702,17 +722,20 @@
                 div.className = `flex items-center justify-between p-3 bg-zinc-800 hover:bg-zinc-700 transition-all rounded-2xl`;
                 
                 div.innerHTML = `
-                    <div class="flex items-center gap-x-3">
-                        <div class="w-9 h-9 bg-${album.color}-900 flex items-center justify-center rounded-xl text-xs font-bold text-${album.color}-300">
+                    <div class="flex items-center gap-x-3 flex-1 min-w-0">
+                        <div class="w-9 h-9 bg-${album.color}-900 flex items-center justify-center rounded-xl text-xs font-bold text-${album.color}-300 flex-shrink-0">
                             ${album.name.charAt(0)}
                         </div>
-                        <div>
-                            <div class="font-semibold">${album.name}</div>
+                        <div class="min-w-0">
+                            <div class="font-semibold truncate">${album.name}</div>
                             <div class="text-xs text-zinc-400">${album.images.length} ảnh</div>
+                            <div class="text-[10px] text-amber-400/70 font-mono truncate" title="${album.folder || 'albums/'}">
+                                <i class="fa-solid fa-folder text-[9px]"></i> ${album.folder || 'albums/'}
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="flex items-center gap-x-1">
+                    <div class="flex items-center gap-x-1 flex-shrink-0">
                         <button onclick="uploadToAlbum('${album.id}'); event.stopImmediatePropagation();" 
                                 class="px-3 py-1 text-xs rounded-xl bg-zinc-700 hover:bg-zinc-600 transition-all">
                             <i class="fa-solid fa-upload"></i>

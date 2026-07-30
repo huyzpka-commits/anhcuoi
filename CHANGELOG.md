@@ -69,4 +69,15 @@ All notable changes to this project are documented here.
 
 ---
 
+## [2026-07-30] — v1.2.0 (Folder System)
+
+### Added
+- Root `albums/` folder in project structure
+- Each album now has a `folder` field (e.g. `albums/sunny_garden/`)
+- Auto-generates folder path when creating new album via Admin (slugify album name)
+- Folder path displayed in Admin Panel album list
+- Toast notification shows folder path on album creation
+
+---
+
 **Note**: All changes are tracked to prevent scope drift and maintain project direction.
