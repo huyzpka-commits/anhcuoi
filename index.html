@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dũng - Anh • Wedding Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@300;400;500&amp;display=swap');
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .masonry-grid {
+            column-count: 2;
+            column-gap: 1.25rem;
+        }
+        
+        @media (min-width: 768px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 4;
+            }
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.25rem;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+        }
+        
+        .masonry-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+
+        .image-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .image-card img {
+            width: 100%;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .image-card:hover img {
+            transform: scale(1.12);
+        }
+
+        /* Shine + Sparkle Effects */
+        .shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.45) 40%, transparent 60%);
+            background-size: 300% 300%;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .image-card:hover .shine {
+            animation: shine-sweep 1.8s forwards;
+            opacity: 1;
+        }
+
+        .sparkle-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #fff, 0 0 12px #d4af77;
+            animation: sparkle-twinkle 1.4s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        .image-card:hover .sparkle {
+            opacity: 1;
+        }
+
+        @keyframes shine-sweep {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        @keyframes sparkle-twinkle {
+            0%, 100% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .nav-active {
+            color: #d4af77;
+            position: relative;
+        }
+        
+        .nav-active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #d4af77;
+        }
+
+        .album-header {
+            transition: all 0.3s ease;
+        }
+
+        .modal {
+            animation: modalPop 0.3s ease forwards;
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .photo-grid {
+            scrollbar-width: none;
+        }
+        
+        .photo-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .luxury-bg {
+            background: linear-gradient(#0f0f0f, #1a1a1a);
+        }
+
+        .admin-panel {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        .gallery-filter {
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Navbar -->
+    <nav class="bg-zinc-900 border-b border-zinc-800 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-x-3">
+                    <div class="flex items-center gap-x-2.5">
+                        <div class="w-9 h-9 bg-gradient-to-br from-amber-300 to-yellow-600 flex items-center justify-center rounded-full">
+                            <i class="fa-solid fa-camera text-zinc-900 text-xl"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-3xl tracking-tighter">Dũng</span>
+                            <span class="text-amber-400 font-semibold text-xl">- Anh</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center gap-x-9 text-sm font-medium">
+                    <a href="#albums" class="hover:text-amber-300 transition-colors">Albums</a>
+                    <a href="#gallery" class="hover:text-amber-300 transition-colors">Thư viện</a>
+                </div>
+                
+                <div class="flex items-center gap-x-3">
+                    <!-- Search Bar -->
+                    <div class="relative w-72 hidden md:block">
+                        <input id="search-input" 
+                               type="text" 
+                               placeholder="Tìm ảnh hoặc album..." 
+                               class="w-full bg-zinc-800 border border-zinc-700 text-sm rounded-3xl pl-11 py-3 focus:outline-none focus:border-amber-300 transition-all"
+                               onkeyup="filterGallery()">
+                        <i class="fa-solid fa-search absolute left-4 top-4 text-zinc-500"></i>
+                    </div>
+                    
+                    <!-- Admin Toggle -->
+                    <button onclick="toggleAdminPanel()" 
+                            class="flex items-center gap-x-2 px-5 py-2.5 text-sm font-semibold rounded-3xl border border-zinc-700 hover:bg-zinc-800 transition-all">
+                        <i class="fa-solid fa-cog"></i>
+                        <span class="hidden md:inline">Admin</span>
+                    </button>
+                    
+                    <button onclick="showContactModal()" 
+                            class="px-6 py-2.5 text-sm font-semibold bg-white text-zinc-900 rounded-3xl flex items-center gap-x-2 hover:bg-amber-300 transition-all">
+                        <span class="hidden md:inline">Liên hệ</span>
+                        <i class="fa-solid fa-phone"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Parallax -->
+    <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="parallax absolute inset-0" 
+             style="background-image: url('https://picsum.photos/id/1015/2000/1200'); background-position: center;">
+            <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/70 via-zinc-950/60 to-zinc-950"></div>
+        </div>
+        
+        <!-- Sparkles -->
+        <div id="hero-sparkles" class="absolute inset-0 pointer-events-none"></div>
+        
+        <div class="relative z-10 max-w-4xl px-6 text-center">
+            <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6">
+                <div class="flex items-center gap-x-2">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span class="text-sm font-medium tracking-[2px]">DŨNG ANH WEDDING 2026</span>
+                </div>
+            </div>
+            
+            <h1 class="text-7xl md:text-8xl font-black tracking-tighter leading-none mb-4 heading-serif">
+                BỘ SƯU TẬP<br>
+                <span class="bg-gradient-to-r from-amber-300 to-yellow-400 bg-clip-text text-transparent">LUNG LINH</span>
+            </h1>
+            
+            <p class="max-w-md mx-auto text-xl text-zinc-300 mb-10">Những khoảnh khắc cưới đẹp nhất được lưu giữ vĩnh cửu</p>
+            
+            <div class="flex items-center justify-center gap-x-4">
+                <button onclick="document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' })" 
+                        class="px-8 py-4 bg-white text-zinc-900 font-extrabold rounded-3xl flex items-center gap-x-3 hover:bg-amber-300 transition-all">
+                    <span>Khám phá ngay</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 flex flex-col items-center text-xs tracking-[3px] text-zinc-400">
+            <span>SCROLL TO EXPLORE</span>
+            <i class="fa-solid fa-chevron-down mt-1 animate-bounce"></i>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-8 border-b border-zinc-800">
+        <div class="flex flex-wrap justify-center md:justify-between items-center gap-x-12 gap-y-4 text-center">
+            <div>
+                <div id="total-photos" class="text-5xl font-black">124</div>
+                <div class="text-xs tracking-widest text-zinc-400">ẢNH CAO CẤP</div>
+            </div>
+            <div>
+                <div id="total-albums" class="text-5xl font-black">6</div>
+                <div class="text-xs tracking-widest text-zinc-400">ALBUMS</div>
+            </div>
+            <div>
+                <div class="text-5xl font-black">4K</div>
+                <div class="text-xs tracking-widest text-zinc-400">ĐỘ PHÂN GIẢI</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Albums Section -->
+    <section id="albums" class="max-w-screen-2xl mx-auto px-8 pt-14 pb-8">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <span class="px-4 py-1 text-xs font-bold bg-zinc-800 border border-zinc-700 rounded-2xl">BỘ SƯU TẬP</span>
+                <h2 class="text-6xl font-black heading-serif mt-1">Albums</h2>
+            </div>
+            <button onclick="showCreateAlbumModal()" 
+                    class="hidden md:flex items-center gap-x-2 px-6 py-3.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-sm font-semibold rounded-3xl transition-all">
+                <i class="fa-solid fa-plus mr-2"></i> 
+                <span>Tạo album mới</span>
+            </button>
+        </div>
+        
+        <!-- Album Cards -->
+        <div id="album-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- Full Gallery Section -->
+    <section id="gallery" class="max-w-screen-2xl mx-auto px-8 pt-8 pb-20 bg-zinc-900">
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <h2 class="text-5xl font-black heading-serif">Thư viện ảnh</h2>
+                <p class="text-zinc-400 mt-1">Tất cả ảnh trong các album</p>
+            </div>
+            <div class="flex items-center gap-x-2 text-sm">
+                <div onclick="filterByAlbum('all')" class="filter-tab px-5 py-2 rounded-3xl cursor-pointer active-filter bg-white text-zinc-900" id="filter-all">
+                    Tất cả
+                </div>
+            </div>
+        </div>
+        
+        <!-- Masonry Gallery -->
+        <div id="masonry-gallery" class="masonry-grid">
+            <!-- Populated dynamically by JS -->
+        </div>
+    </section>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="hidden fixed right-0 top-0 h-screen w-96 bg-zinc-900 border-l border-zinc-700 z-[90] overflow-y-auto">
+        <div class="p-7">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <span class="font-bold text-xl">Admin Panel</span>
+                    <span class="text-xs text-emerald-400 ml-2">• LIVE</span>
+                </div>
+                <button onclick="toggleAdminPanel()" class="text-zinc-400 hover:text-white text-2xl">×</button>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Create Album -->
+                <div>
+                    <div class="font-semibold mb-2 text-sm">TẠO ALBUM MỚI</div>
+                    <div class="flex gap-x-2">
+                        <input id="new-album-name" type="text" placeholder="Tên album" 
+                               class="flex-1 bg-zinc-800 border border-zinc-700 rounded-2xl px-4 py-3 text-sm focus:border-amber-300">
+                        <button onclick="createNewAlbum()" 
+                                class="px-5 py-3 bg-amber-300 text-zinc-900 font-bold rounded-2xl hover:bg-amber-400 transition-all">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="border-t border-zinc-700 pt-6">
+                    <div class="font-semibold mb-3 text-sm">QUẢN LÝ ALBUMS</div>
+                    <div id="admin-album-list" class="space-y-2 text-sm">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-xs text-center text-zinc-500">
+                Dữ liệu được lưu trữ trong trình duyệt của bạn
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="image-modal" onclick="if (event.target.id === 'image-modal') closeModal()" 
+         class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center">
+        <div class="max-w-[1100px] w-full mx-4 modal" onclick="event.stopImmediatePropagation()">
+            <div class="flex justify-between items-center px-5 py-4">
+                <div class="flex items-center gap-x-3">
+                    <div id="modal-album-badge" class="px-4 py-1 text-xs font-bold rounded-3xl flex items-center gap-x-2"></div>
+                    <div id="modal-image-count" class="text-sm text-zinc-400"></div>
+                </div>
+                
+                <div class="flex items-center gap-x-2">
+                    <button onclick="downloadCurrentImage()" class="px-4 py-2 flex items-center gap-x-2 text-sm hover:bg-white/10 transition-colors rounded-2xl border border-white/20">
+                        <i class="fa-solid fa-download"></i>
+                        <span class="hidden md:inline text-xs font-medium">TẢI</span>
+                    </button>
+                    <button onclick="closeModal()" class="w-9 h-9 flex items-center justify-center text-xl hover:bg-white/10 transition-colors rounded-2xl">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="px-5 flex justify-center">
+                <div class="relative max-h-[72vh]">
+                    <img id="modal-image" class="max-h-[72vh] max-w-full rounded-3xl shadow-2xl border border-white/10 object-contain" alt="">
+                    <div id="modal-sparkles" class="absolute inset-0 pointer-events-none rounded-3xl"></div>
+                </div>
+            </div>
+            
+            <div class="px-5 pt-4 pb-2 flex flex-col md:flex-row items-start md:items-center justify-between">
+                <div>
+                    <div id="modal-caption" class="text-xl font-semibold"></div>
+                </div>
+                
+                <div class="flex items-center gap-x-2 mt-4 md:mt-0">
+                    <button onclick="prevImage()" class="w-11 h-11 flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors rounded-2xl border border-white/10">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button onclick="nextImage()" class="w-11 h-11 flex items-center justify-center bg-white/10 hover:bg-white/20 transition-colors rounded-2xl border border-white/10">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="px-5 pb-6 pt-2">
+                <div id="modal-thumbnails" class="flex gap-x-3 overflow-x-auto pb-2 photo-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind config
+        function initTailwind() {
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            'serif-custom': ['Playfair Display', 'Georgia', 'serif']
+                        }
+                    }
+                }
+            };
+        }
+
+        // Data Storage (localStorage)
+        let albums = [];
+        
+        function loadData() {
+            const saved = localStorage.getItem('dung_anh_gallery_albums');
+            if (saved) {
+                albums = JSON.parse(saved);
+            } else {
+                // Default sample data
+                albums = [
+                    {
+                        id: 'sunny',
+                        name: 'Sunny Garden',
+                        color: 'emerald',
+                        images: [
+                            { id: Date.now() + 1, url: 'https://picsum.photos/id/1015/800/600', caption: 'Sunny Garden #1' },
+                            { id: Date.now() + 2, url: 'https://picsum.photos/id/1005/800/600', caption: 'Sunny Garden #2' },
+                            { id: Date.now() + 3, url: 'https://picsum.photos/id/1033/800/600', caption: 'Sunny Garden #3' },
+                            { id: Date.now() + 4, url: 'https://picsum.photos/id/160/800/600', caption: 'Sunny Garden #4' }
+                        ]
+                    },
+                    {
+                        id: 'saigon',
+                        name: 'Phim Trường Sài Gòn',
+                        color: 'amber',
+                        images: [
+                            { id: Date.now() + 5, url: 'https://picsum.photos/id/201/800/600', caption: 'Phim Trường #1' },
+                            { id: Date.now() + 6, url: 'https://picsum.photos/id/251/800/600', caption: 'Phim Trường #2' },
+                            { id: Date.now() + 7, url: 'https://picsum.photos/id/29/800/600', caption: 'Phim Trường #3' },
+                            { id: Date.now() + 8, url: 'https://picsum.photos/id/180/800/600', caption: 'Phim Trường #4' }
+                        ]
+                    },
+                    {
+                        id: 'highlights',
+                        name: 'Highlights',
+                        color: 'violet',
+                        images: [
+                            { id: Date.now() + 9, url: 'https://picsum.photos/id/1009/800/600', caption: 'Highlight #1' },
+                            { id: Date.now() + 10, url: 'https://picsum.photos/id/133/800/600', caption: 'Highlight #2' },
+                            { id: Date.now() + 11, url: 'https://picsum.photos/id/177/800/600', caption: 'Highlight #3' }
+                        ]
+                    },
+                    {
+                        id: 'night',
+                        name: 'Garden Night',
+                        color: 'rose',
+                        images: [
+                            { id: Date.now() + 12, url: 'https://picsum.photos/id/106/800/600', caption: 'Night #1' },
+                            { id: Date.now() + 13, url: 'https://picsum.photos/id/1018/800/600', caption: 'Night #2' }
+                        ]
+                    },
+                    {
+                        id: 'indoor',
+                        name: 'Indoor Studio',
+                        color: 'sky',
+                        images: [
+                            { id: Date.now() + 14, url: 'https://picsum.photos/id/160/800/600', caption: 'Studio #1' },
+                            { id: Date.now() + 15, url: 'https://picsum.photos/id/201/800/600', caption: 'Studio #2' },
+                            { id: Date.now() + 16, url: 'https://picsum.photos/id/251/800/600', caption: 'Studio #3' }
+                        ]
+                    }
+                ];
+                saveData();
+            }
+        }
+        
+        function saveData() {
+            localStorage.setItem('dung_anh_gallery_albums', JSON.stringify(albums));
+            updateStats();
+        }
+        
+        function updateStats() {
+            let totalPhotos = 0;
+            albums.forEach(album => totalPhotos += album.images.length);
+            
+            document.getElementById('total-photos').innerText = totalPhotos;
+            document.getElementById('total-albums').innerText = albums.length;
+        }
+
+        // Render Album Cards
+        function renderAlbumCards() {
+            const container = document.getElementById('album-cards');
+            container.innerHTML = '';
+            
+            albums.forEach(album => {
+                const cardHTML = `
+                    <div onclick="scrollToAlbum('${album.id}')" class="group cursor-pointer bg-zinc-900 border border-zinc-700 rounded-3xl overflow-hidden">
+                        <div class="relative h-60">
+                            <img src="${album.images[0] ? album.images[0].url : 'https://picsum.photos/id/1015/600/400'}" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="${album.name}">
+                            
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/75"></div>
+                            
+                            <div class="absolute bottom-0 left-0 p-6">
+                                <div class="flex items-center gap-x-2 mb-1">
+                                    <span class="px-3 py-0.5 text-xs font-bold bg-${album.color}-900 text-${album.color}-300 rounded-2xl">${album.name}</span>
+                                </div>
+                                <h3 class="text-3xl font-extrabold">${album.name}</h3>
+                                <p class="text-xs text-zinc-400 mt-1">${album.images.length} ảnh</p>
+                            </div>
+                            
+                            <div class="absolute top-4 right-4 px-3 py-1 text-xs font-medium bg-black/70 rounded-2xl flex items-center gap-x-1.5">
+                                <i class="fa-solid fa-images text-xs"></i>
+                                <span>${album.images.length}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+        
+        // Render Masonry Gallery
+        function renderMasonryGallery(filteredAlbums = null) {
+            const container = document.getElementById('masonry-gallery');
+            container.innerHTML = '';
+            
+            let albumsToShow = filteredAlbums || albums;
+            
+            albumsToShow.forEach(album => {
+                album.images.forEach((img, idx) => {
+                    const itemHTML = `
+                        <div class="masonry-item group image-card cursor-pointer border border-zinc-800" 
+                             data-album-id="${album.id}" 
+                             data-image-id="${img.id}"
+                             onclick="openImageModal('${album.id}', ${idx})">
+                            
+                            <img src="${img.url}" alt="${img.caption}" class="w-full">
+                            
+                            <div class="shine"></div>
+                            
+                            <div class="sparkle-container">
+                                <div class="sparkle"></div>
+                                <div class="sparkle"></div>
+                                <div class="sparkle"></div>
+                            </div>
+                            
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+                                <div class="flex justify-between items-end">
+                                    <div>
+                                        <div class="text-sm font-medium text-white">${img.caption}</div>
+                                        <div class="text-[10px] text-zinc-400">${album.name}</div>
+                                    </div>
+                                    <div class="px-2 py-0.5 text-[10px] bg-white/20 text-white rounded flex items-center">
+                                        <i class="fa-solid fa-search text-xs"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += itemHTML;
+                });
+            });
+        }
+        
+        // Filter Gallery
+        let currentFilter = 'all';
+        
+        function filterGallery() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const container = document.getElementById('masonry-gallery');
+            
+            const items = container.querySelectorAll('.masonry-item');
+            
+            let visibleCount = 0;
+            
+            items.forEach(item => {
+                const caption = item.querySelector('.text-sm') ? item.querySelector('.text-sm').innerText.toLowerCase() : '';
+                const albumName = item.getAttribute('data-album-id') || '';
+                
+                const matchesSearch = caption.includes(searchTerm) || albumName.includes(searchTerm);
+                
+                if (matchesSearch) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        
+        function filterByAlbum(albumId) {
+            const container = document.getElementById('masonry-gallery');
+            const items = container.querySelectorAll('.masonry-item');
+            
+            // Reset active state
+            document.querySelectorAll('.filter-tab').forEach(el => el.classList.remove('active-filter', 'bg-white', 'text-zinc-900'));
+            
+            if (albumId === 'all') {
+                document.getElementById('filter-all').classList.add('active-filter', 'bg-white', 'text-zinc-900');
+                items.forEach(item => item.style.display = '');
+            } else {
+                // Create dynamic filter tabs if needed
+                items.forEach(item => {
+                    if (item.getAttribute('data-album-id') === albumId) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Re-apply search if there's text
+            const searchTerm = document.getElementById('search-input').value;
+            if (searchTerm) filterGallery();
+        }
+        
+        // Scroll to album section with highlight
+        function scrollToAlbum(albumId) {
+            const gallerySection = document.getElementById('gallery');
+            gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            setTimeout(() => {
+                // Filter gallery to show only this album
+                const items = document.querySelectorAll('.masonry-item');
+                items.forEach(item => {
+                    if (item.getAttribute('data-album-id') === albumId) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }, 700);
+        }
+        
+        // Create New Album
+        function createNewAlbum() {
+            const nameInput = document.getElementById('new-album-name');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert('Vui lòng nhập tên album!');
+                return;
+            }
+            
+            const colors = ['emerald', 'amber', 'violet', 'rose', 'sky', 'indigo', 'orange'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            const newAlbum = {
+                id: 'album_' + Date.now(),
+                name: name,
+                color: randomColor,
+                images: []
+            };
+            
+            albums.push(newAlbum);
+            saveData();
+            
+            renderAlbumCards();
+            renderMasonryGallery();
+            renderAdminAlbumList();
+            
+            nameInput.value = '';
+            
+            // Show success message
+            const toast = document.createElement('div');
+            toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-900 text-emerald-300 px-5 py-3 rounded-2xl text-sm`;
+            toast.innerHTML = `Đã tạo album <strong>${name}</strong>`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.remove(), 2200);
+        }
+        
+        // Render Admin Album List
+        function renderAdminAlbumList() {
+            const container = document.getElementById('admin-album-list');
+            container.innerHTML = '';
+            
+            albums.forEach(album => {
+                const div = document.createElement('div');
+                div.className = `flex items-center justify-between p-3 bg-zinc-800 hover:bg-zinc-700 transition-all rounded-2xl`;
+                
+                div.innerHTML = `
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-9 h-9 bg-${album.color}-900 flex items-center justify-center rounded-xl text-xs font-bold text-${album.color}-300">
+                            ${album.name.charAt(0)}
+                        </div>
+                        <div>
+                            <div class="font-semibold">${album.name}</div>
+                            <div class="text-xs text-zinc-400">${album.images.length} ảnh</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-x-1">
+                        <button onclick="uploadToAlbum('${album.id}'); event.stopImmediatePropagation();" 
+                                class="px-3 py-1 text-xs rounded-xl bg-zinc-700 hover:bg-zinc-600 transition-all">
+                            <i class="fa-solid fa-upload"></i>
+                        </button>
+                        
+                        <button onclick="deleteAlbum('${album.id}'); event.stopImmediatePropagation();" 
+                                class="px-3 py-1 text-xs text-red-400 hover:bg-red-900/30 rounded-xl transition-all">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(div);
+            });
+        }
+        
+        // Upload images to album
+        function uploadToAlbum(albumId) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.multiple = true;
+            
+            input.onchange = function() {
+                const files = Array.from(input.files);
+                
+                if (files.length === 0) return;
+                
+                const album = albums.find(a => a.id === albumId);
+                if (!album) return;
+                
+                let loaded = 0;
+                
+                files.forEach(file => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const newImage = {
+                            id: Date.now() + Math.floor(Math.random() * 10000),
+                            url: e.target.result,
+                            caption: file.name.replace(/\.[^/.]+$/, "")
+                        };
+                        
+                        album.images.push(newImage);
+                        loaded++;
+                        
+                        if (loaded === files.length) {
+                            saveData();
+                            renderAlbumCards();
+                            renderMasonryGallery();
+                            renderAdminAlbumList();
+                            
+                            // Refresh gallery if needed
+                            alert(`Đã thêm ${files.length} ảnh vào album "${album.name}"`);
+                        }
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
+            };
+            
+            input.click();
+        }
+        
+        function deleteAlbum(albumId) {
+            if (!confirm('Bạn có chắc muốn xóa album này không?')) return;
+            
+            albums = albums.filter(a => a.id !== albumId);
+            saveData();
+            
+            renderAlbumCards();
+            renderMasonryGallery();
+            renderAdminAlbumList();
+        }
+        
+        // Image Modal
+        let currentAlbumId = null;
+        let currentImageIndex = 0;
+        
+        function openImageModal(albumId, index) {
+            const album = albums.find(a => a.id === albumId);
+            if (!album) return;
+            
+            currentAlbumId = albumId;
+            currentImageIndex = index;
+            
+            const modal = document.getElementById('image-modal');
+            modal.style.display = 'flex';
+            
+            showImageInModal(albumId, index);
+            renderModalThumbnails(albumId);
+        }
+        
+        function showImageInModal(albumId, index) {
+            const album = albums.find(a => a.id === albumId);
+            const imgData = album.images[index];
+            
+            document.getElementById('modal-image').src = imgData.url;
+            document.getElementById('modal-caption').innerHTML = imgData.caption;
+            
+            const badge = document.getElementById('modal-album-badge');
+            badge.innerHTML = `<span class="font-semibold">${album.name}</span>`;
+            badge.className = `px-4 py-1 text-xs font-bold rounded-3xl flex items-center gap-x-2 bg-${album.color}-900 text-${album.color}-300`;
+            
+            document.getElementById('modal-image-count').innerHTML = `${index + 1} / ${album.images.length}`;
+            
+            // Add sparkle effect
+            setTimeout(() => addModalSparkles(), 300);
+        }
+        
+        function renderModalThumbnails(albumId) {
+            const container = document.getElementById('modal-thumbnails');
+            container.innerHTML = '';
+            
+            const album = albums.find(a => a.id === albumId);
+            
+            album.images.forEach((img, idx) => {
+                const thumb = document.createElement('div');
+                thumb.className = `flex-shrink-0 w-16 h-16 rounded-2xl overflow-hidden cursor-pointer border transition-all ${idx === currentImageIndex ? 'border-amber-300 scale-105' : 'border-white/10 opacity-70 hover:opacity-100'}`;
+                thumb.innerHTML = `<img src="${img.url}" class="w-full h-full object-cover">`;
+                
+                thumb.onclick = () => {
+                    showImageInModal(albumId, idx);
+                    renderModalThumbnails(albumId);
+                };
+                
+                container.appendChild(thumb);
+            });
+        }
+        
+        function addModalSparkles() {
+            const container = document.getElementById('modal-sparkles');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 8; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.style.cssText = `position:absolute; width:3.5px; height:3.5px; background:white; border-radius:50%; box-shadow:0 0 6px #fff, 0 0 12px #d4af77; left:${Math.random()*100}%; top:${Math.random()*100}%; animation:sparkle-twinkle ${1.4 + Math.random()*1.2}s infinite ease-in-out`;
+                container.appendChild(sparkle);
+            }
+        }
+        
+        function nextImage() {
+            if (!currentAlbumId) return;
+            const album = albums.find(a => a.id === currentAlbumId);
+            let newIndex = currentImageIndex + 1;
+            if (newIndex >= album.images.length) newIndex = 0;
+            
+            showImageInModal(currentAlbumId, newIndex);
+            renderModalThumbnails(currentAlbumId);
+        }
+        
+        function prevImage() {
+            if (!currentAlbumId) return;
+            const album = albums.find(a => a.id === currentAlbumId);
+            let newIndex = currentImageIndex - 1;
+            if (newIndex < 0) newIndex = album.images.length - 1;
+            
+            showImageInModal(currentAlbumId, newIndex);
+            renderModalThumbnails(currentAlbumId);
+        }
+        
+        function downloadCurrentImage() {
+            if (!currentAlbumId) return;
+            const album = albums.find(a => a.id === currentAlbumId);
+            const imgData = album.images[currentImageIndex];
+            
+            const link = document.createElement('a');
+            link.href = imgData.url;
+            link.download = imgData.caption + '.jpg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.style.display = 'none';
+            document.getElementById('modal-sparkles').innerHTML = '';
+        }
+        
+        // Admin Panel
+        let adminOpen = false;
+        
+        function toggleAdminPanel() {
+            const panel = document.getElementById('admin-panel');
+            adminOpen = !adminOpen;
+            
+            if (adminOpen) {
+                panel.classList.remove('hidden');
+                renderAdminAlbumList();
+            } else {
+                panel.classList.add('hidden');
+            }
+        }
+        
+        // Create Hero Sparkles
+        function createHeroSparkles() {
+            const container = document.getElementById('hero-sparkles');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 30; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.style.cssText = `position:absolute; width:${Math.random()*3.5+1.8}px; height:${sparkle.style.width}; background:white; border-radius:50%; box-shadow:0 0 8px #fff, 0 0 18px #d4af77; left:${Math.random()*100}%; top:${Math.random()*100}%; opacity:${Math.random()*0.8+0.2}; animation:sparkle-twinkle ${1.8+Math.random()*3}s infinite ease-in-out`;
+                container.appendChild(sparkle);
+            }
+        }
+        
+        // Keyboard controls
+        function setupKeyboard() {
+            document.addEventListener('keydown', function(e) {
+                const modal = document.getElementById('image-modal');
+                if (modal.style.display === 'flex') {
+                    if (e.key === 'Escape') closeModal();
+                    if (e.key === 'ArrowRight') nextImage();
+                    if (e.key === 'ArrowLeft') prevImage();
+                }
+                
+                if (e.key === '/' && document.activeElement.tagName === 'BODY') {
+                    e.preventDefault();
+                    document.getElementById('search-input').focus();
+                }
+            });
+        }
+        
+        function showContactModal() {
+            const modal = document.createElement('div');
+            modal.className = `fixed inset-0 bg-black/90 flex items-center justify-center z-[200]`;
+            modal.innerHTML = `
+                <div onclick="event.target.remove()" class="max-w-md w-full mx-4 bg-zinc-900 border border-zinc-700 rounded-3xl p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="font-bold text-3xl">Liên hệ Dũng - Anh</h3>
+                            <p class="text-sm text-zinc-400">Đám cưới Dũng & Anh</p>
+                        </div>
+                        <button onclick="event.target.closest('.fixed').remove()" class="text-3xl text-zinc-400">×</button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-zinc-800 p-4 rounded-2xl flex items-center gap-x-3">
+                            <i class="fa-solid fa-phone text-amber-300 w-5"></i>
+                            <div>
+                                <div class="text-xs text-zinc-400">Hotline</div>
+                                <div class="font-bold">0948 218 888</div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4 border-t border-zinc-700">
+                            <a href="tel:0948218888" class="block w-full text-center py-3.5 bg-gradient-to-r from-amber-300 to-yellow-400 text-zinc-900 font-extrabold rounded-3xl">GỌI NGAY</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        // Initialize everything
+        function initialize() {
+            initTailwind();
+            loadData();
+            
+            renderAlbumCards();
+            renderMasonryGallery();
+            updateStats();
+            renderAdminAlbumList();
+            
+            createHeroSparkles();
+            setupKeyboard();
+            
+            // Initial filter tab active state
+            const filterAll = document.getElementById('filter-all');
+            if (filterAll) {
+                filterAll.classList.add('active-filter', 'bg-white', 'text-zinc-900');
+            }
+            
+            // Add some initial filter buttons dynamically
+            setTimeout(() => {
+                const filterContainer = document.querySelector('#gallery .flex.items-end');
+                if (filterContainer) {
+                    const extraFilters = document.createElement('div');
+                    extraFilters.className = `flex gap-x-1 text-sm ml-4`;
+                    extraFilters.innerHTML = `
+                        <div onclick="filterByAlbum('sunny')" class="filter-tab px-4 py-2 rounded-3xl cursor-pointer bg-zinc-800 hover:bg-zinc-700">Sunny</div>
+                        <div onclick="filterByAlbum('saigon')" class="filter-tab px-4 py-2 rounded-3xl cursor-pointer bg-zinc-800 hover:bg-zinc-700">Sài Gòn</div>
+                    `;
+                    filterContainer.appendChild(extraFilters);
+                }
+            }, 500);
+            
+            console.log('%c[Dũng - Anh Gallery] Dynamic gallery initialized. Admin mode available.', 'color:#52525b');
+        }
+        
+        window.onload = initialize;
+    </script>
+</body>
+</html>
