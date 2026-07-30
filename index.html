@@ -442,7 +442,7 @@
         
         async function loadData() {
             try {
-                const resp = await fetch('manifest.json');
+                const resp = await fetch('manifest.json?v=' + Date.now());
                 if (!resp.ok) throw new Error('manifest not found');
                 const manifestAlbums = await resp.json();
                 
