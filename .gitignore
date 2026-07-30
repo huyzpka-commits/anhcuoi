@@ -1,0 +1,6 @@
+# Ignore all files inside albums subfolders
+albums/*/*
+# But keep .gitkeep files
+!albums/*/.gitkeep
+# Keep root .gitkeep
+!albums/.gitkeep
