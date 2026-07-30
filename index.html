@@ -319,8 +319,8 @@
                 <h2 class="text-5xl font-black heading-serif">Thư viện ảnh</h2>
                 <p class="text-zinc-400 mt-1">Tất cả ảnh trong các album</p>
             </div>
-            <div class="flex items-center gap-x-2 text-sm">
-                <div onclick="filterByAlbum('all')" class="filter-tab px-5 py-2 rounded-3xl cursor-pointer active-filter bg-white text-zinc-900" id="filter-all">
+            <div class="flex items-center gap-x-2 text-sm overflow-x-auto max-w-[60%] photo-grid pb-1">
+                <div onclick="filterByAlbum('all')" class="filter-tab px-5 py-2 rounded-3xl cursor-pointer active-filter bg-white text-zinc-900 whitespace-nowrap" id="filter-all">
                     Tất cả
                 </div>
             </div>
@@ -436,77 +436,44 @@
 
         // Data Storage (localStorage)
         let albums = [];
+        const albumColors = ['emerald', 'amber', 'violet', 'rose', 'sky', 'indigo', 'orange', 'teal', 'cyan', 'fuchsia'];
         
-        function loadData() {
-            const saved = localStorage.getItem('dung_anh_gallery_albums');
-            if (saved) {
-                albums = JSON.parse(saved);
-            } else {
-                // Default sample data
-                albums = [
-                    {
-                        id: 'sunny',
-                        name: 'Sunny Garden',
-                        color: 'emerald',
-                        folder: 'albums/sunny_garden',
-                        images: [
-                            { id: Date.now() + 1, url: 'https://picsum.photos/id/1015/800/600', caption: 'Sunny Garden #1' },
-                            { id: Date.now() + 2, url: 'https://picsum.photos/id/1005/800/600', caption: 'Sunny Garden #2' },
-                            { id: Date.now() + 3, url: 'https://picsum.photos/id/1033/800/600', caption: 'Sunny Garden #3' },
-                            { id: Date.now() + 4, url: 'https://picsum.photos/id/160/800/600', caption: 'Sunny Garden #4' }
-                        ]
-                    },
-                    {
-                        id: 'saigon',
-                        name: 'Phim Trường Sài Gòn',
-                        color: 'amber',
-                        folder: 'albums/phim_truong_sai_gon',
-                        images: [
-                            { id: Date.now() + 5, url: 'https://picsum.photos/id/201/800/600', caption: 'Phim Trường #1' },
-                            { id: Date.now() + 6, url: 'https://picsum.photos/id/251/800/600', caption: 'Phim Trường #2' },
-                            { id: Date.now() + 7, url: 'https://picsum.photos/id/29/800/600', caption: 'Phim Trường #3' },
-                            { id: Date.now() + 8, url: 'https://picsum.photos/id/180/800/600', caption: 'Phim Trường #4' }
-                        ]
-                    },
-                    {
-                        id: 'highlights',
-                        name: 'Highlights',
-                        color: 'violet',
-                        folder: 'albums/highlights',
-                        images: [
-                            { id: Date.now() + 9, url: 'https://picsum.photos/id/1009/800/600', caption: 'Highlight #1' },
-                            { id: Date.now() + 10, url: 'https://picsum.photos/id/133/800/600', caption: 'Highlight #2' },
-                            { id: Date.now() + 11, url: 'https://picsum.photos/id/177/800/600', caption: 'Highlight #3' }
-                        ]
-                    },
-                    {
-                        id: 'night',
-                        name: 'Garden Night',
-                        color: 'rose',
-                        folder: 'albums/garden_night',
-                        images: [
-                            { id: Date.now() + 12, url: 'https://picsum.photos/id/106/800/600', caption: 'Night #1' },
-                            { id: Date.now() + 13, url: 'https://picsum.photos/id/1018/800/600', caption: 'Night #2' }
-                        ]
-                    },
-                    {
-                        id: 'indoor',
-                        name: 'Indoor Studio',
-                        color: 'sky',
-                        folder: 'albums/indoor_studio',
-                        images: [
-                            { id: Date.now() + 14, url: 'https://picsum.photos/id/160/800/600', caption: 'Studio #1' },
-                            { id: Date.now() + 15, url: 'https://picsum.photos/id/201/800/600', caption: 'Studio #2' },
-                            { id: Date.now() + 16, url: 'https://picsum.photos/id/251/800/600', caption: 'Studio #3' }
-                        ]
-                    }
-                ];
-                saveData();
+        async function loadData() {
+            try {
+                const resp = await fetch('manifest.json');
+                if (!resp.ok) throw new Error('manifest not found');
+                const manifestAlbums = await resp.json();
+                
+                albums = manifestAlbums.map((al, i) => ({
+                    id: 'manifest_' + i,
+                    name: al.name,
+                    color: albumColors[i % albumColors.length],
+                    folder: al.folder,
+                    images: al.images.map((img, j) => ({
+                        id: Date.now() + i * 1000 + j,
+                        url: encodeURI(img.url),
+                        caption: img.caption
+                    }))
+                }));
+            } catch (e) {
+                console.warn('Could not load manifest.json, falling back to localStorage', e);
+                const saved = localStorage.getItem('dung_anh_gallery_albums');
+                if (saved) {
+                    albums = JSON.parse(saved);
+                }
+            }
+            
+            // Merge user-created albums from localStorage
+            const userSaved = localStorage.getItem('dung_anh_user_albums');
+            if (userSaved) {
+                const userAlbums = JSON.parse(userSaved);
+                albums = albums.concat(userAlbums);
             }
         }
         
         function saveData() {
-            localStorage.setItem('dung_anh_gallery_albums', JSON.stringify(albums));
+            const userAlbums = albums.filter(a => a.id && a.id.startsWith('album_'));
+            localStorage.setItem('dung_anh_user_albums', JSON.stringify(userAlbums));
             updateStats();
         }
         
@@ -806,6 +773,11 @@
         }
         
         function deleteAlbum(albumId) {
+            const album = albums.find(a => a.id === albumId);
+            if (album && album.id.startsWith('manifest_')) {
+                alert('Không thể xóa album mặc định từ manifest.json');
+                return;
+            }
             if (!confirm('Bạn có chắc muốn xóa album này không?')) return;
             
             albums = albums.filter(a => a.id !== albumId);
@@ -997,9 +969,9 @@
         }
         
         // Initialize everything
-        function initialize() {
+        async function initialize() {
             initTailwind();
-            loadData();
+            await loadData();
             
             renderAlbumCards();
             renderMasonryGallery();
@@ -1015,21 +987,19 @@
                 filterAll.classList.add('active-filter', 'bg-white', 'text-zinc-900');
             }
             
-            // Add some initial filter buttons dynamically
-            setTimeout(() => {
-                const filterContainer = document.querySelector('#gallery .flex.items-end');
-                if (filterContainer) {
-                    const extraFilters = document.createElement('div');
-                    extraFilters.className = `flex gap-x-1 text-sm ml-4`;
-                    extraFilters.innerHTML = `
-                        <div onclick="filterByAlbum('sunny')" class="filter-tab px-4 py-2 rounded-3xl cursor-pointer bg-zinc-800 hover:bg-zinc-700">Sunny</div>
-                        <div onclick="filterByAlbum('saigon')" class="filter-tab px-4 py-2 rounded-3xl cursor-pointer bg-zinc-800 hover:bg-zinc-700">Sài Gòn</div>
-                    `;
-                    filterContainer.appendChild(extraFilters);
-                }
-            }, 500);
+            // Build dynamic filter buttons from loaded albums
+            const filterContainer = document.querySelector('#gallery .flex.items-end .flex.items-center.gap-x-2');
+            if (filterContainer) {
+                albums.forEach(album => {
+                    const tab = document.createElement('div');
+                    tab.onclick = () => filterByAlbum(album.id);
+                    tab.className = 'filter-tab px-4 py-2 rounded-3xl cursor-pointer bg-zinc-800 hover:bg-zinc-700 transition-all whitespace-nowrap';
+                    tab.textContent = album.name;
+                    filterContainer.appendChild(tab);
+                });
+            }
             
-            console.log('%c[Dũng - Anh Gallery] Dynamic gallery initialized. Admin mode available.', 'color:#52525b');
+            console.log('%c[Dũng - Anh Gallery] Loaded ' + albums.length + ' albums from manifest. Admin mode available.', 'color:#d4af77');
         }
         
         window.onload = initialize;
