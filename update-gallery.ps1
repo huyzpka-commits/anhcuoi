@@ -7,11 +7,15 @@ Write-Host "`n===== UPDATE GALLERY =====" -ForegroundColor Cyan
 # 1. Scan albums folder and generate manifest.json
 Write-Host "`n[1/3] Scanning albums/ folder..." -ForegroundColor Yellow
 
-$excludeAlbums = @("Váy Xinh")
+$excludeAlbums = @("*V*y Xinh*")
 $albums = @()
 Get-ChildItem -Path "albums" -Directory | ForEach-Object {
     $name = $_.Name
-    if ($excludeAlbums -contains $name) {
+    $isExcluded = $false
+    foreach ($pattern in $excludeAlbums) {
+        if ($name -like $pattern) { $isExcluded = $true; break }
+    }
+    if ($isExcluded) {
         Write-Host "  $($name): [HIDDEN]" -ForegroundColor DarkGray
         return
     }
