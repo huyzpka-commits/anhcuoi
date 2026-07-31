@@ -441,6 +441,9 @@
         const albumColors = ['emerald', 'amber', 'violet', 'rose', 'sky', 'indigo', 'orange', 'teal', 'cyan', 'fuchsia'];
         
         async function loadData() {
+            // Clear old cached data to prevent stale albums
+            localStorage.removeItem('dung_anh_gallery_albums');
+            
             try {
                 const resp = await fetch('manifest.json?v=' + Date.now());
                 if (!resp.ok) throw new Error('manifest not found');
