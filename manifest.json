@@ -518,6 +518,22 @@
                        {
                            "url":  "albums/Năm 2016/127213301130136.jpg",
                            "caption":  "127213301130136"
+                       },
+                       {
+                           "url":  "albums/Năm 2016/20160901_085959.jpg",
+                           "caption":  "20160901_085959"
+                       },
+                       {
+                           "url":  "albums/Năm 2016/20160902_205653.jpg",
+                           "caption":  "20160902_205653"
+                       },
+                       {
+                           "url":  "albums/Năm 2016/20160917_224628.jpg",
+                           "caption":  "20160917_224628"
+                       },
+                       {
+                           "url":  "albums/Năm 2016/20160929_093724.jpg",
+                           "caption":  "20160929_093724"
                        }
                    ]
     },
@@ -525,6 +541,58 @@
         "name":  "Năm 2017",
         "folder":  "albums/Năm 2017",
         "images":  [
+                       {
+                           "url":  "albums/Năm 2017/1705064953054.jpg",
+                           "caption":  "1705064953054"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/1705064953068.jpg",
+                           "caption":  "1705064953068"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20161217_165738.jpg",
+                           "caption":  "20161217_165738"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20161224_201049.jpg",
+                           "caption":  "20161224_201049"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20170119_201040.jpg",
+                           "caption":  "20170119_201040"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20170125_224938.jpg",
+                           "caption":  "20170125_224938"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20170131_163706.jpg",
+                           "caption":  "20170131_163706"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20170430_100411.jpg",
+                           "caption":  "20170430_100411"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20170430_100420.jpg",
+                           "caption":  "20170430_100420"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20170618_194357.jpg",
+                           "caption":  "20170618_194357"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20170702_085253.jpg",
+                           "caption":  "20170702_085253"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20170702_095906.jpg",
+                           "caption":  "20170702_095906"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/20170704_093710.jpg",
+                           "caption":  "20170704_093710"
+                       },
                        {
                            "url":  "albums/Năm 2017/486409123_2091134324738014_1269356886079064810_n.jpg",
                            "caption":  "486409123_2091134324738014_1269356886079064810_n"
@@ -556,6 +624,10 @@
                        {
                            "url":  "albums/Năm 2017/487281734_2091134438071336_4748151048316281216_n.jpg",
                            "caption":  "487281734_2091134438071336_4748151048316281216_n"
+                       },
+                       {
+                           "url":  "albums/Năm 2017/FB_IMG_1712218709393.jpg",
+                           "caption":  "FB_IMG_1712218709393"
                        }
                    ]
     },
@@ -563,6 +635,10 @@
         "name":  "Năm 2018",
         "folder":  "albums/Năm 2018",
         "images":  [
+                       {
+                           "url":  "albums/Năm 2018/20180218_161832.jpg",
+                           "caption":  "20180218_161832"
+                       },
                        {
                            "url":  "albums/Năm 2018/341554839695980.jpg",
                            "caption":  "341554839695980"
@@ -702,6 +778,10 @@
                        {
                            "url":  "albums/Năm 2018/655036794_27210661608523273_493879373881048678_n.jpg",
                            "caption":  "655036794_27210661608523273_493879373881048678_n"
+                       },
+                       {
+                           "url":  "albums/Năm 2018/IMG_20181001_201845.jpg",
+                           "caption":  "IMG_20181001_201845"
                        }
                    ]
     },
@@ -730,28 +810,160 @@
         "name":  "Năm 2022",
         "folder":  "albums/Năm 2022",
         "images":  [
-
+                       {
+                           "url":  "albums/Năm 2022/IMG_20221001_200754.jpg",
+                           "caption":  "IMG_20221001_200754"
+                       },
+                       {
+                           "url":  "albums/Năm 2022/IMG_20221001_200914.jpg",
+                           "caption":  "IMG_20221001_200914"
+                       },
+                       {
+                           "url":  "albums/Năm 2022/IMG_20221001_201015.jpg",
+                           "caption":  "IMG_20221001_201015"
+                       },
+                       {
+                           "url":  "albums/Năm 2022/IMG_20221001_203331.jpg",
+                           "caption":  "IMG_20221001_203331"
+                       },
+                       {
+                           "url":  "albums/Năm 2022/IMG_20221224_212908.jpg",
+                           "caption":  "IMG_20221224_212908"
+                       }
                    ]
     },
     {
         "name":  "Năm 2023",
         "folder":  "albums/Năm 2023",
         "images":  [
-
+                       {
+                           "url":  "albums/Năm 2023/2J8A3386.jpg",
+                           "caption":  "2J8A3386"
+                       },
+                       {
+                           "url":  "albums/Năm 2023/2J8A3392.jpg",
+                           "caption":  "2J8A3392"
+                       },
+                       {
+                           "url":  "albums/Năm 2023/CAS00475.jpg",
+                           "caption":  "CAS00475"
+                       },
+                       {
+                           "url":  "albums/Năm 2023/CAS00479.jpg",
+                           "caption":  "CAS00479"
+                       },
+                       {
+                           "url":  "albums/Năm 2023/CAS00572.jpg",
+                           "caption":  "CAS00572"
+                       },
+                       {
+                           "url":  "albums/Năm 2023/IMG_20230729_093538.jpg",
+                           "caption":  "IMG_20230729_093538"
+                       },
+                       {
+                           "url":  "albums/Năm 2023/IMG_20230729_093546.jpg",
+                           "caption":  "IMG_20230729_093546"
+                       },
+                       {
+                           "url":  "albums/Năm 2023/IMG_20230801_092223.jpg",
+                           "caption":  "IMG_20230801_092223"
+                       }
                    ]
     },
     {
         "name":  "Năm 2024",
         "folder":  "albums/Năm 2024",
         "images":  [
-
+                       {
+                           "url":  "albums/Năm 2024/IMG_1704165097547_1705150280452.jpg",
+                           "caption":  "IMG_1704165097547_1705150280452"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_1704165097557_1705150284647.jpg",
+                           "caption":  "IMG_1704165097557_1705150284647"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_20240112_202510.jpg",
+                           "caption":  "IMG_20240112_202510"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_20240120_112755.jpg",
+                           "caption":  "IMG_20240120_112755"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_20240126_145306.jpg",
+                           "caption":  "IMG_20240126_145306"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_20240210_093435.jpg",
+                           "caption":  "IMG_20240210_093435"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_20240211_161821.jpg",
+                           "caption":  "IMG_20240211_161821"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_20240211_200153.jpg",
+                           "caption":  "IMG_20240211_200153"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_20240213_180422.jpg",
+                           "caption":  "IMG_20240213_180422"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_20240215_115614.jpg",
+                           "caption":  "IMG_20240215_115614"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_20240930_231401.jpg",
+                           "caption":  "IMG_20240930_231401"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/IMG_20241102_095607.jpg",
+                           "caption":  "IMG_20241102_095607"
+                       },
+                       {
+                           "url":  "albums/Năm 2024/retouch_2024010117283254.jpg",
+                           "caption":  "retouch_2024010117283254"
+                       }
                    ]
     },
     {
         "name":  "Năm 2025",
         "folder":  "albums/Năm 2025",
         "images":  [
-
+                       {
+                           "url":  "albums/Năm 2025/IMG_20250118_101649.jpg",
+                           "caption":  "IMG_20250118_101649"
+                       },
+                       {
+                           "url":  "albums/Năm 2025/IMG_20250118_101719.jpg",
+                           "caption":  "IMG_20250118_101719"
+                       },
+                       {
+                           "url":  "albums/Năm 2025/IMG_20250118_101742.jpg",
+                           "caption":  "IMG_20250118_101742"
+                       },
+                       {
+                           "url":  "albums/Năm 2025/IMG_20250118_101842.jpg",
+                           "caption":  "IMG_20250118_101842"
+                       },
+                       {
+                           "url":  "albums/Năm 2025/IMG_20250122_145709.jpg",
+                           "caption":  "IMG_20250122_145709"
+                       },
+                       {
+                           "url":  "albums/Năm 2025/IMG_20250406_181932.jpg",
+                           "caption":  "IMG_20250406_181932"
+                       },
+                       {
+                           "url":  "albums/Năm 2025/IMG_20250406_182006.jpg",
+                           "caption":  "IMG_20250406_182006"
+                       },
+                       {
+                           "url":  "albums/Năm 2025/IMG_20250406_190626.jpg",
+                           "caption":  "IMG_20250406_190626"
+                       }
                    ]
     },
     {
